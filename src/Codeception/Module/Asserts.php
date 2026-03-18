@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Codeception\Module;
 
-use Throwable;
-
 use function get_debug_type;
+
+use Throwable;
 
 /**
  * Special module for using asserts in your tests.

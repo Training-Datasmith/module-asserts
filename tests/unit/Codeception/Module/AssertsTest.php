@@ -62,7 +62,7 @@ final class AssertsTest extends TestCase
         $this->module->assertContainsEquals(2, [1, 2]);
         $this->module->assertContainsNotOnlyArray([['foo'], 'foo', ['bar']]);
         $this->module->assertContainsNotOnlyBool([true, false, true, 42]);
-        $this->module->assertContainsNotOnlyCallable([fn() => 'foo', 'bar', fn() => 'bar']);
+        $this->module->assertContainsNotOnlyCallable([fn () => 'foo', 'bar', fn () => 'bar']);
         $this->module->assertContainsNotOnlyClosedResource([$closedResource, $openendResource]);
         $this->module->assertContainsNotOnlyFloat([1.1, 1.42, 5]);
         $this->module->assertContainsNotOnlyInstancesOf(\Support\Data\DummyClass::class, [new \Support\Data\DummyClass(), new stdClass(), new \Support\Data\DummyClass()]);
@@ -78,7 +78,7 @@ final class AssertsTest extends TestCase
         $this->module->assertContainsOnly('integer', [5, 6]);
         $this->module->assertContainsOnlyArray([['foo'], ['bar']]);
         $this->module->assertContainsOnlyBool([true, false, true]);
-        $this->module->assertContainsOnlyCallable([fn() => 'foo', fn() => 'bar']);
+        $this->module->assertContainsOnlyCallable([fn () => 'foo', fn () => 'bar']);
         $this->module->assertContainsOnlyClosedResource([$closedResource]);
         $this->module->assertContainsOnlyFloat([1.1, 1.42]);
         $this->module->assertContainsOnlyInstancesOf(\Support\Data\DummyClass::class, [new \Support\Data\DummyClass(), new \Support\Data\DummyClass()]);
@@ -124,7 +124,8 @@ final class AssertsTest extends TestCase
         $this->module->assertInstanceOf('Exception', new Exception());
         $this->module->assertIsArray([1, 2, 3]);
         $this->module->assertIsBool(true);
-        $this->module->assertIsCallable(function() {});
+        $this->module->assertIsCallable(function () {
+        });
         $this->module->assertIsClosedResource($closedResource);
         $this->module->assertIsFloat(1.2);
         $this->module->assertIsInt(2);
@@ -140,7 +141,8 @@ final class AssertsTest extends TestCase
         $this->module->assertIsNotObject(false);
         $this->module->assertIsNotReadable(__FILE__.'.notExist');
         $this->module->assertIsNotResource(false);
-        $this->module->assertIsNotScalar(function() {});
+        $this->module->assertIsNotScalar(function () {
+        });
         $this->module->assertIsNotString(false);
         $this->module->assertIsNotWritable(__FILE__.'.notExist');
         $this->module->assertIsNumeric('12.34');
@@ -203,7 +205,7 @@ final class AssertsTest extends TestCase
         $this->module->assertStringNotEqualsFileCanonicalizing(codecept_data_dir().'/data3.txt', 'foo bar foo');
         $this->module->assertStringNotEqualsFileIgnoringCase(codecept_data_dir().'/data3.txt', 'foo bar foo');
         $this->module->assertStringNotMatchesFormat('*%s*', '**');
-        $this->module->assertStringNotMatchesFormatFile(codecept_data_dir().'/expectedFileFormat.txt', "FO");
+        $this->module->assertStringNotMatchesFormatFile(codecept_data_dir().'/expectedFileFormat.txt', 'FO');
         $this->module->assertStringStartsNotWith('ba', 'foo');
         $this->module->assertStringStartsWith('fo', 'foo');
         $this->module->assertThat(4, new IsEqual(4));
@@ -219,7 +221,7 @@ final class AssertsTest extends TestCase
     public function testExceptions()
     {
         $this->module->expectThrowable('Exception', function () {
-            throw new Exception;
+            throw new Exception();
         });
         $this->module->expectThrowable(new Exception('here'), function () {
             throw new Exception('here');
