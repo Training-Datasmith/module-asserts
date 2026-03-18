@@ -40,7 +40,7 @@ class Asserts extends AbstractAsserts
     public function expectThrowable(string|Throwable $throwable, callable $callback): void
     {
         if (is_object($throwable)) {
-            $class = get_class($throwable);
+            $class = $throwable::class;
             $msg = $throwable->getMessage();
             $code = (int) $throwable->getCode();
         } else {
