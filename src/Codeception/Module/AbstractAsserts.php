@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Codeception\Module;
 
 use Codeception\Module;
 use Codeception\Util\Shared\Asserts;
-
-abstract class AbstractAsserts extends Module
+abstract class Abstract_Asserts extends Module
 {
     use Asserts {
         assertArrayHasKey as public;

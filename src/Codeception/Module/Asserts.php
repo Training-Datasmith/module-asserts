@@ -1,17 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Codeception\Module;
 
 use function get_debug_type;
-
 use Throwable;
-
 /**
  * Special module for using asserts in your tests.
  */
-class Asserts extends AbstractAsserts
+class Asserts extends Abstract_Asserts
 {
     /**
      * Handles and checks throwables (Exceptions/Errors) called inside the callback function.
@@ -37,64 +34,41 @@ class Asserts extends AbstractAsserts
      * });
      * ```
      */
-    public function expectThrowable(string|Throwable $throwable, callable $callback): void
+    public function expect_throwable(string|Throwable $throwable, callable $callback): void
     {
         if (is_object($throwable)) {
             $class = $throwable::class;
-            $msg = $throwable->getMessage();
-            $code = (int) $throwable->getCode();
+            $msg = $throwable->get_message();
+            $code = (int) $throwable->get_code();
         } else {
             $class = $throwable;
             $msg = null;
             $code = null;
         }
-
         try {
             $callback();
         } catch (Throwable $t) {
-            $this->checkThrowable($t, $class, $msg, $code);
+            $this->check_throwable($t, $class, $msg, $code);
             return;
         }
-
         $this->fail("Expected throwable of class '{$class}' to be thrown, but nothing was caught");
     }
-
     /**
      * Check if the given throwable matches the expected data,
      * fail (throws an exception) if it does not.
      */
-    protected function checkThrowable(
-        Throwable $throwable,
-        string $expectedClass,
-        ?string $expectedMsg,
-        int|null $expectedCode = null
-    ): void {
-        if (!($throwable instanceof $expectedClass)) {
-            $this->fail(sprintf(
-                "Exception of class '%s' expected to be thrown, but class '%s' was caught",
-                $expectedClass,
-                get_debug_type($throwable)
-            ));
+    protected function check_throwable(Throwable $throwable, string $expected_class, ?string $expected_msg, int|null $expected_code = null): void
+    {
+        if (!$throwable instanceof $expected_class) {
+            $this->fail(sprintf("Exception of class '%s' expected to be thrown, but class '%s' was caught", $expected_class, get_debug_type($throwable)));
         }
-
-        if (null !== $expectedMsg && $throwable->getMessage() !== $expectedMsg) {
-            $this->fail(sprintf(
-                "Exception of class '%s' expected to have message '%s', but actual message was '%s'",
-                $expectedClass,
-                $expectedMsg,
-                $throwable->getMessage()
-            ));
+        if (null !== $expected_msg && $throwable->get_message() !== $expected_msg) {
+            $this->fail(sprintf("Exception of class '%s' expected to have message '%s', but actual message was '%s'", $expected_class, $expected_msg, $throwable->get_message()));
         }
-
-        if (null !== $expectedCode && $throwable->getCode() !== $expectedCode) {
-            $this->fail(sprintf(
-                "Exception of class '%s' expected to have code '%s', but actual code was '%s'",
-                $expectedClass,
-                $expectedCode,
-                $throwable->getCode()
-            ));
+        if (null !== $expected_code && $throwable->get_code() !== $expected_code) {
+            $this->fail(sprintf("Exception of class '%s' expected to have code '%s', but actual code was '%s'", $expected_class, $expected_code, $throwable->get_code()));
         }
-
-        $this->assertTrue(true); // increment assertion counter
+        $this->assert_true(true);
+        // increment assertion counter
     }
 }
