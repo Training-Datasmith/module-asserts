@@ -42,7 +42,7 @@ class Asserts extends AbstractAsserts
         if (is_object($throwable)) {
             $class = get_class($throwable);
             $msg = $throwable->getMessage();
-            $code = (int) $throwable->getCode();
+            $code = $throwable->getCode();
         } else {
             $class = $throwable;
             $msg = null;
@@ -67,7 +67,7 @@ class Asserts extends AbstractAsserts
         Throwable $throwable,
         string $expectedClass,
         ?string $expectedMsg,
-        int|null $expectedCode = null
+        int|string|null $expectedCode = null
     ): void {
         if (!($throwable instanceof $expectedClass)) {
             $this->fail(sprintf(
